@@ -1,10 +1,13 @@
 <div class="heka-equity-wrapper">
   <style>
     .heka-equity-wrapper {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
+      align-items: flex-start;
       padding: 40px 20px;
       box-sizing: border-box;
+      background: #081a37; /* tweak to match exact brand blue if needed */
     }
 
     .heka-equity-card,
@@ -12,9 +15,9 @@
       max-width: 760px;
       width: 100%;
       background: #ffffff;
-      border-radius: 16px;
-      padding: 32px 28px;
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.06);
+      border-radius: 18px;
+      padding: 32px 28px 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
       box-sizing: border-box;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Helvetica Neue", Arial, sans-serif;
@@ -26,10 +29,10 @@
 
     .heka-equity-eyebrow {
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
       font-size: 11px;
       font-weight: 600;
-      color: #777;
+      color: #6b7280;
       margin-bottom: 8px;
     }
 
@@ -38,7 +41,7 @@
       line-height: 1.3;
       font-weight: 650;
       margin: 0 0 8px 0;
-      color: #111827;
+      color: #0f172a;
     }
 
     .heka-equity-subtitle {
@@ -67,15 +70,17 @@
       max-width: 220px;
       padding: 10px 12px;
       font-size: 14px;
-      border-radius: 10px;
+      border-radius: 999px;
       border: 1px solid #d1d5db;
       box-sizing: border-box;
+      background: #f9fafb;
     }
 
     .heka-equity-input:focus {
       outline: none;
       border-color: #2563eb;
       box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+      background: #ffffff;
     }
 
     .heka-equity-hint {
@@ -86,13 +91,13 @@
 
     .heka-equity-summary {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       margin: 18px 0 24px;
     }
 
     .heka-equity-pill {
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid #e5e7eb;
       padding: 10px 12px;
       background: #f9fafb;
@@ -108,7 +113,7 @@
     }
 
     .heka-equity-pill-value {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: #111827;
     }
@@ -151,10 +156,65 @@
       color: #111827;
     }
 
+    .heka-growth-section {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .heka-growth-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .heka-growth-subtitle {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 14px;
+    }
+
+    .heka-growth-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .heka-growth-row-label {
+      font-size: 12px;
+      color: #111827;
+      margin-bottom: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .heka-growth-row-label span:last-child {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .heka-growth-bar-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .heka-growth-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+      transform-origin: left center;
+      transform: scaleX(0);
+      transition: transform 0.8s ease-out;
+    }
+
     .heka-equity-footnote {
       font-size: 11px;
       color: #9ca3af;
-      margin-top: 16px;
+      margin-top: 18px;
       line-height: 1.5;
     }
 
@@ -163,7 +223,7 @@
       font-size: 22px;
       font-weight: 650;
       margin: 0 0 8px 0;
-      color: #111827;
+      color: #0f172a;
     }
 
     .heka-password-subtitle {
@@ -185,15 +245,17 @@
       max-width: 260px;
       padding: 10px 12px;
       font-size: 14px;
-      border-radius: 10px;
+      border-radius: 999px;
       border: 1px solid #d1d5db;
       box-sizing: border-box;
+      background: #f9fafb;
     }
 
     .heka-password-input:focus {
       outline: none;
       border-color: #2563eb;
       box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+      background: #ffffff;
     }
 
     .heka-password-button {
@@ -224,7 +286,7 @@
       .heka-equity-card,
       .heka-password-card {
         padding: 24px 18px;
-        border-radius: 12px;
+        border-radius: 14px;
       }
 
       .heka-equity-title,
@@ -305,15 +367,11 @@
     <div class="heka-equity-summary">
       <div class="heka-equity-pill">
         <div class="heka-equity-pill-label">Current price per share*</div>
-        <div class="heka-equity-pill-value" id="heka-current-price">$2.50</div>
+        <div class="heka-equity-pill-value" id="heka-current-price">$2.60</div>
       </div>
       <div class="heka-equity-pill">
         <div class="heka-equity-pill-label">Your current value*</div>
         <div class="heka-equity-pill-value" id="heka-current-value">$0.00</div>
-      </div>
-      <div class="heka-equity-pill">
-        <div class="heka-equity-pill-label">Total company shares</div>
-        <div class="heka-equity-pill-value">10,000,000</div>
       </div>
     </div>
 
@@ -322,13 +380,20 @@
         <thead>
           <tr>
             <th>Scenario</th>
-            <th>Company valuation</th>
-            <th>Price / share</th>
+            <th>Projected valuation</th>
             <th>Your value</th>
           </tr>
         </thead>
         <tbody id="heka-equity-rows"></tbody>
       </table>
+    </div>
+
+    <div class="heka-growth-section">
+      <div class="heka-growth-title">Growth over time</div>
+      <div class="heka-growth-subtitle">
+        How HekaHeart’s projected valuation scales relative to today.
+      </div>
+      <div class="heka-growth-bars" id="heka-growth-bars"></div>
     </div>
 
     <div class="heka-equity-footnote">
@@ -345,8 +410,8 @@
   <script>
     (function () {
       // ----- Access code gate -----
-      // CHANGE THIS TO YOUR REAL ACCESS CODE BEFORE SHARING
-      const ACCESS_CODE = "hekaheart!";
+      // IMPORTANT: change this to the access code you're already using
+      const ACCESS_CODE = "YOUR_ACCESS_CODE_HERE";
 
       var passwordCard = document.getElementById("heka-password-card");
       var calculatorCard = document.getElementById("heka-equity-calculator");
@@ -376,16 +441,17 @@
       // ----- Calculator logic -----
       var TOTAL_SHARES = 10000000;
       var scenarios = [
-        { label: "Today (current)", value: 25000000 },
-        { label: "End of 2026", value: 90000000 },
-        { label: "End of 2027", value: 270000000 },
-        { label: "End of 2028", value: 640000000 },
+        { label: "Today (current)", value: 26000000 },
+        { label: "End of 2026", value: 92000000 },
+        { label: "End of 2027", value: 280000000 },
+        { label: "End of 2028", value: 660000000 },
       ];
 
       var input = document.getElementById("heka-shares-input");
       var rowsContainer = document.getElementById("heka-equity-rows");
       var currentPriceEl = document.getElementById("heka-current-price");
       var currentValueEl = document.getElementById("heka-current-value");
+      var growthBarsContainer = document.getElementById("heka-growth-bars");
 
       function formatCurrency(value) {
         if (!isFinite(value)) return "$0.00";
@@ -405,7 +471,7 @@
         }
       }
 
-      function render() {
+      function renderTable() {
         var sharesRaw = (input && input.value) || "0";
         var shares = parseFloat(sharesRaw.replace(/,/g, "")) || 0;
 
@@ -424,9 +490,6 @@
             formatCurrency(s.value) +
             "</td>" +
             "<td>" +
-            formatCurrency(pricePerShare) +
-            "</td>" +
-            "<td>" +
             formatCurrency(userValue) +
             "</td>";
 
@@ -439,11 +502,57 @@
         });
       }
 
-      // Initial render (in case card is already shown)
-      render();
+      function renderGrowthBars() {
+        var maxVal = Math.max.apply(
+          null,
+          scenarios.map(function (s) {
+            return s.value;
+          })
+        );
+        var baseVal = scenarios[0].value;
+
+        growthBarsContainer.innerHTML = "";
+
+        scenarios.forEach(function (s, idx) {
+          var multiple = s.value / baseVal;
+          var width = (s.value / maxVal) * 100;
+
+          var row = document.createElement("div");
+
+          var label = document.createElement("div");
+          label.className = "heka-growth-row-label";
+          label.innerHTML =
+            "<span>" +
+            s.label +
+            "</span><span>" +
+            (idx === 0 ? "baseline" : multiple.toFixed(1) + "× today") +
+            "</span>";
+
+          var track = document.createElement("div");
+          track.className = "heka-growth-bar-track";
+
+          var fill = document.createElement("div");
+          fill.className = "heka-growth-bar-fill";
+          fill.style.width = width + "%";
+
+          track.appendChild(fill);
+          row.appendChild(label);
+          row.appendChild(track);
+          growthBarsContainer.appendChild(row);
+
+          // trigger animation
+          setTimeout(function () {
+            fill.style.transform = "scaleX(1)";
+          }, 50 + idx * 120);
+        });
+      }
+
+      // Initial renders
+      renderTable();
+      renderGrowthBars();
 
       if (input) {
-        input.addEventListener("input", render);
+        input.addEventListener("input", renderTable);
       }
     })();
   </script>
