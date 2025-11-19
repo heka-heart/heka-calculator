@@ -7,7 +7,8 @@
       box-sizing: border-box;
     }
 
-    .heka-equity-card {
+    .heka-equity-card,
+    .heka-password-card {
       max-width: 760px;
       width: 100%;
       background: #ffffff;
@@ -157,19 +158,124 @@
       line-height: 1.5;
     }
 
+    /* Password gate styles */
+    .heka-password-card-title {
+      font-size: 22px;
+      font-weight: 650;
+      margin: 0 0 8px 0;
+      color: #111827;
+    }
+
+    .heka-password-subtitle {
+      font-size: 14px;
+      color: #4b5563;
+      margin: 0 0 20px 0;
+    }
+
+    .heka-password-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .heka-password-input {
+      flex: 0 0 200px;
+      max-width: 260px;
+      padding: 10px 12px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      box-sizing: border-box;
+    }
+
+    .heka-password-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+    }
+
+    .heka-password-button {
+      padding: 10px 18px;
+      font-size: 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #111827;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    .heka-password-error {
+      font-size: 12px;
+      color: #b91c1c;
+      min-height: 16px;
+      margin-top: 4px;
+    }
+
+    .heka-password-hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
     @media (max-width: 600px) {
-      .heka-equity-card {
+      .heka-equity-card,
+      .heka-password-card {
         padding: 24px 18px;
         border-radius: 12px;
       }
 
-      .heka-equity-title {
+      .heka-equity-title,
+      .heka-password-card-title {
         font-size: 20px;
+      }
+
+      .heka-password-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .heka-password-button {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
 
-  <div class="heka-equity-card" id="heka-equity-calculator">
+  <!-- Password Gate -->
+  <div class="heka-password-card" id="heka-password-card">
+    <h2 class="heka-password-card-title">Internal Access</h2>
+    <p class="heka-password-subtitle">
+      This tool is for HekaHeart team members and authorized recipients only. 
+      Please enter the access code shared with you to view the equity value calculator.
+    </p>
+
+    <form class="heka-password-form" id="heka-password-form">
+      <input
+        type="password"
+        id="heka-password-input"
+        class="heka-password-input"
+        placeholder="Access code"
+        autocomplete="off"
+      />
+      <button type="submit" class="heka-password-button">
+        Unlock calculator
+      </button>
+    </form>
+    <div class="heka-password-error" id="heka-password-error"></div>
+    <div class="heka-password-hint">
+      Do not share this link or code externally. For questions, contact People Ops or the founding team.
+    </div>
+  </div>
+
+  <!-- Calculator (initially hidden) -->
+  <div
+    class="heka-equity-card"
+    id="heka-equity-calculator"
+    style="display: none;"
+  >
     <div class="heka-equity-header">
       <div class="heka-equity-eyebrow">HekaHeart</div>
       <h2 class="heka-equity-title">Equity Value Projection</h2>
@@ -238,7 +344,36 @@
 
   <script>
     (function () {
-      // Updated assumptions
+      // ----- Access code gate -----
+      // CHANGE THIS TO YOUR REAL ACCESS CODE BEFORE SHARING
+      const ACCESS_CODE = "hekaheart!";
+
+      var passwordCard = document.getElementById("heka-password-card");
+      var calculatorCard = document.getElementById("heka-equity-calculator");
+      var passwordForm = document.getElementById("heka-password-form");
+      var passwordInput = document.getElementById("heka-password-input");
+      var passwordError = document.getElementById("heka-password-error");
+
+      passwordForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var entered = (passwordInput.value || "").trim();
+
+        if (!entered) {
+          passwordError.textContent = "Please enter the access code.";
+          return;
+        }
+
+        if (entered === ACCESS_CODE) {
+          passwordError.textContent = "";
+          passwordInput.value = "";
+          passwordCard.style.display = "none";
+          calculatorCard.style.display = "block";
+        } else {
+          passwordError.textContent = "Incorrect access code. Please try again.";
+        }
+      });
+
+      // ----- Calculator logic -----
       var TOTAL_SHARES = 10000000;
       var scenarios = [
         { label: "Today (current)", value: 25000000 },
@@ -271,7 +406,7 @@
       }
 
       function render() {
-        var sharesRaw = input.value || "0";
+        var sharesRaw = (input && input.value) || "0";
         var shares = parseFloat(sharesRaw.replace(/,/g, "")) || 0;
 
         rowsContainer.innerHTML = "";
@@ -304,9 +439,12 @@
         });
       }
 
+      // Initial render (in case card is already shown)
       render();
 
-      input.addEventListener("input", render);
+      if (input) {
+        input.addEventListener("input", render);
+      }
     })();
   </script>
 </div>
