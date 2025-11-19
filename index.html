@@ -1,0 +1,312 @@
+<div class="heka-equity-wrapper">
+  <style>
+    .heka-equity-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+
+    .heka-equity-card {
+      max-width: 760px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.06);
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .heka-equity-header {
+      margin-bottom: 24px;
+    }
+
+    .heka-equity-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      font-weight: 600;
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .heka-equity-title {
+      font-size: 24px;
+      line-height: 1.3;
+      font-weight: 650;
+      margin: 0 0 8px 0;
+      color: #111827;
+    }
+
+    .heka-equity-subtitle {
+      font-size: 14px;
+      color: #4b5563;
+      margin: 0;
+    }
+
+    .heka-equity-input-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 18px;
+    }
+
+    .heka-equity-input-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+      flex: 0 0 auto;
+    }
+
+    .heka-equity-input {
+      flex: 0 0 180px;
+      max-width: 220px;
+      padding: 10px 12px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      box-sizing: border-box;
+    }
+
+    .heka-equity-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+    }
+
+    .heka-equity-hint {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .heka-equity-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 18px 0 24px;
+    }
+
+    .heka-equity-pill {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      background: #f9fafb;
+    }
+
+    .heka-equity-pill-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .heka-equity-pill-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .heka-equity-table-wrapper {
+      overflow-x: auto;
+      margin-top: 4px;
+    }
+
+    .heka-equity-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .heka-equity-table th,
+    .heka-equity-table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      white-space: nowrap;
+    }
+
+    .heka-equity-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      font-weight: 600;
+      background: #f9fafb;
+    }
+
+    .heka-equity-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .heka-equity-row-label {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .heka-equity-footnote {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .heka-equity-card {
+        padding: 24px 18px;
+        border-radius: 12px;
+      }
+
+      .heka-equity-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+
+  <div class="heka-equity-card" id="heka-equity-calculator">
+    <div class="heka-equity-header">
+      <div class="heka-equity-eyebrow">HekaHeart</div>
+      <h2 class="heka-equity-title">Equity Value Projection</h2>
+      <p class="heka-equity-subtitle">
+        See how the value of your HekaHeart shares could evolve over time based on current
+        projections. Enter your number of shares below.
+      </p>
+    </div>
+
+    <div class="heka-equity-input-row">
+      <label class="heka-equity-input-label" for="heka-shares-input">
+        Your shares
+      </label>
+      <input
+        id="heka-shares-input"
+        class="heka-equity-input"
+        type="number"
+        min="0"
+        step="1"
+        placeholder="e.g. 10,000"
+      />
+    </div>
+    <div class="heka-equity-hint">
+      Example: If you have options for 10,000 shares, enter <strong>10000</strong> (no commas).
+    </div>
+
+    <div class="heka-equity-summary">
+      <div class="heka-equity-pill">
+        <div class="heka-equity-pill-label">Current price per share*</div>
+        <div class="heka-equity-pill-value" id="heka-current-price">$2.50</div>
+      </div>
+      <div class="heka-equity-pill">
+        <div class="heka-equity-pill-label">Your current value*</div>
+        <div class="heka-equity-pill-value" id="heka-current-value">$0.00</div>
+      </div>
+      <div class="heka-equity-pill">
+        <div class="heka-equity-pill-label">Total company shares</div>
+        <div class="heka-equity-pill-value">10,000,000</div>
+      </div>
+    </div>
+
+    <div class="heka-equity-table-wrapper">
+      <table class="heka-equity-table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Company valuation</th>
+            <th>Price / share</th>
+            <th>Your value</th>
+          </tr>
+        </thead>
+        <tbody id="heka-equity-rows"></tbody>
+      </table>
+    </div>
+
+    <div class="heka-equity-footnote">
+      *This calculator provides an estimated face value of equity based solely on the company’s 
+      projected valuations and fully diluted share count. It does <strong>not</strong> account for 
+      strike prices, exercise costs, alternative minimum tax (AMT), ordinary income or capital gains 
+      tax liabilities, vesting schedules, liquidity risk, or any other financial, legal, or tax 
+      considerations associated with stock options or equity compensation. Actual realized value may 
+      differ substantially and is not guaranteed. This tool is for informational purposes only and 
+      should not be relied upon as financial, tax, or investment advice.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Updated assumptions
+      var TOTAL_SHARES = 10000000;
+      var scenarios = [
+        { label: "Today (current)", value: 25000000 },
+        { label: "End of 2026", value: 90000000 },
+        { label: "End of 2027", value: 270000000 },
+        { label: "End of 2028", value: 640000000 },
+      ];
+
+      var input = document.getElementById("heka-shares-input");
+      var rowsContainer = document.getElementById("heka-equity-rows");
+      var currentPriceEl = document.getElementById("heka-current-price");
+      var currentValueEl = document.getElementById("heka-current-value");
+
+      function formatCurrency(value) {
+        if (!isFinite(value)) return "$0.00";
+        try {
+          return value.toLocaleString(undefined, {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 2,
+          });
+        } catch (e) {
+          return (
+            "$" +
+            (Math.round(value * 100) / 100)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          );
+        }
+      }
+
+      function render() {
+        var sharesRaw = input.value || "0";
+        var shares = parseFloat(sharesRaw.replace(/,/g, "")) || 0;
+
+        rowsContainer.innerHTML = "";
+
+        scenarios.forEach(function (s, idx) {
+          var pricePerShare = s.value / TOTAL_SHARES;
+          var userValue = pricePerShare * shares;
+
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            '<td class="heka-equity-row-label">' +
+            s.label +
+            "</td>" +
+            "<td>" +
+            formatCurrency(s.value) +
+            "</td>" +
+            "<td>" +
+            formatCurrency(pricePerShare) +
+            "</td>" +
+            "<td>" +
+            formatCurrency(userValue) +
+            "</td>";
+
+          rowsContainer.appendChild(tr);
+
+          if (idx === 0) {
+            currentPriceEl.textContent = formatCurrency(pricePerShare);
+            currentValueEl.textContent = formatCurrency(userValue);
+          }
+        });
+      }
+
+      render();
+
+      input.addEventListener("input", render);
+    })();
+  </script>
+</div>
